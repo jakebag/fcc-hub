@@ -25,7 +25,6 @@ export default function Navbar() {
                   <DesktopNavLink to="register">Create Account</DesktopNavLink>
                   <DesktopNavLink to="login">Login</DesktopNavLink>
                   <DesktopNavLink to="products">Products</DesktopNavLink>
-                  <DesktopNavLink to="add-product">Add Product</DesktopNavLink>
                   <DesktopNavLink to="cart">Cart</DesktopNavLink>
                   <DesktopNavLink to="orders">Orders</DesktopNavLink>
                   <DesktopNavLink to="profile">Profile</DesktopNavLink>
@@ -51,7 +50,6 @@ export default function Navbar() {
               <MobileNavLink to="register">Create Account</MobileNavLink>
               <MobileNavLink to="login">Login</MobileNavLink>
               <MobileNavLink to="products">Products</MobileNavLink>
-              <MobileNavLink to="add-product">Add Product</MobileNavLink>
               <MobileNavLink to="cart">Cart</MobileNavLink>
               <MobileNavLink to="orders">Orders</MobileNavLink>
               <MobileNavLink to="profile">Profile</MobileNavLink>
