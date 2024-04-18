@@ -39,7 +39,8 @@ export default function ProductDetails() {
       });
   }, [id]);
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     if (user) {
       const existingProduct = cart.find((item) => item.id === product.id);
       let updatedCart;
