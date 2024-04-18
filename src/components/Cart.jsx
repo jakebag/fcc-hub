@@ -203,9 +203,11 @@ export default function Cart() {
               </span>
             </p>
 
-            <div className="mt-8" onClick={handleOrder}>
-              <SecondaryButton>Order now</SecondaryButton>
-            </div>
+            {user && (
+              <div className="mt-8" onClick={handleOrder}>
+                <SecondaryButton>Order now</SecondaryButton>
+              </div>
+            )}
           </div>
         </>
       )}
