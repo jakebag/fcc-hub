@@ -58,7 +58,7 @@ export default function Register() {
       })
       .then((response) => {
         console.log("User registered successfully:", response.data);
-        setUser(newUser);
+        setUser(response.data);
         localStorage.setItem("token", JSON.stringify(newUser));
         localStorage.removeItem("cart");
         navigate("/products");

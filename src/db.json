@@ -57,34 +57,5 @@
       "for": "XBOX"
     }
   ],
-  "users": [
-    {
-      "id": "eecf",
-      "firstname": "john",
-      "username": "john",
-      "password": "123456",
-      "cart": [],
-      "orders": [
-        {
-          "date": "2024-04-18T17:12:27.484Z",
-          "items": [
-            {
-              "id": "sb91",
-              "name": "MICRO LITE for PC",
-              "image": "https://junkfoodarcades.com/cdn/shop/products/FullLavender3.jpg?v=1704814260",
-              "quantity": 1,
-              "price": "120"
-            },
-            {
-              "id": "kj54",
-              "name": "MICRO LITE Starter Kit",
-              "image": "https://junkfoodarcades.com/cdn/shop/files/StarterKit.jpg?v=1709926660",
-              "quantity": 1,
-              "price": "140"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "users": []
 }

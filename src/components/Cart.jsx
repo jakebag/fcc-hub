@@ -23,12 +23,8 @@ export default function Cart() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadedCart = JSON.parse(localStorage.getItem("cart"));
-    if (loadedCart) setLocalCart(loadedCart);
-  }, [setLocalCart]);
-
-  useEffect(() => {
     if (user) {
+      console.log(user);
       axios.get(`http://localhost:3000/users/${user.id}`).then((res) => {
         const user = res.data;
         setCart(user.cart);
@@ -39,6 +35,11 @@ export default function Cart() {
       setLoading(false);
     }
   }, [localCart, user]);
+
+  useEffect(() => {
+    const loadedCart = JSON.parse(localStorage.getItem("cart"));
+    if (loadedCart) setLocalCart(loadedCart);
+  }, [setLocalCart]);
 
   if (loading)
     return (
