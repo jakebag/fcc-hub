@@ -59,11 +59,21 @@
   ],
   "users": [
     {
-      "id": "e27e",
-      "firstname": "John",
-      "username": "john1234",
+      "id": "14e7",
+      "firstname": "john",
+      "username": "john",
       "password": "123456",
-      "cart": [],
+      "cart": [
+        {
+          "id": "sb91",
+          "name": "MICRO LITE for PC",
+          "description": "Enhance your PC gaming experience with the MICRO LITE. Designed for PC players, this accessory offers standard MICRO features with limited system support. Enjoy seamless gameplay and streamline your setup with this sleek and efficient accessory.",
+          "price": "120",
+          "image": "https://junkfoodarcades.com/cdn/shop/products/FullLavender3.jpg?v=1704814260",
+          "for": "PC",
+          "quantity": 1
+        }
+      ],
       "orders": []
     }
   ]

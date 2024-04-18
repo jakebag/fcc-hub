@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import { SubmitButton } from "./Buttons";
 import Error from "./Error";
 
-import useUserStore from "../hooks/useUserStore";
+// import useUserStore from "../hooks/useUserStore";
 import useTempStore from "../hooks/useTempStore";
 
 export default function ProductDetails() {
@@ -17,8 +17,8 @@ export default function ProductDetails() {
   const [error, setError] = useState(null);
   const { id } = useParams();
 
-  const { user } = useUserStore();
-  const { updateCart } = useTempStore();
+  // const { user } = useUserStore();
+  const { cart, updateCart } = useTempStore();
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -42,7 +42,7 @@ export default function ProductDetails() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    updateCart(product.id, qty);
+    updateCart(product, qty);
   }
 
   if (loading)
@@ -90,7 +90,11 @@ export default function ProductDetails() {
             />
           </div>
           <div className="mt-8">
-            <SubmitButton>Add to Cart</SubmitButton>
+            <SubmitButton disabled={cart.some((i) => i.id === product.id)}>
+              {cart.some((i) => i.id === product.id)
+                ? "Already in Cart"
+                : "Add to Cart"}
+            </SubmitButton>
           </div>
         </form>
       </div>

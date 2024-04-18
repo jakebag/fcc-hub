@@ -41,7 +41,7 @@ export default function Register() {
     const newUser = {
       ...formData,
       username: lowercaseUsername,
-      cart: [],
+      cart: JSON.parse(localStorage.getItem("cart")) || [],
       orders: [],
     };
 
@@ -59,6 +59,8 @@ export default function Register() {
       .then((response) => {
         console.log("User registered successfully:", response.data);
         setUser(newUser);
+        localStorage.setItem("token", JSON.stringify(newUser));
+        localStorage.removeItem("cart");
         navigate("/products");
       })
       .catch((error) => {

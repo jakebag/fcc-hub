@@ -32,20 +32,32 @@ export default function Login() {
     e.preventDefault();
 
     const lowercaseUsername = formData.username.toLowerCase();
+    let identifiedUser;
 
     axios
       .get(`http://localhost:3000/users`)
       .then((response) => {
         const returnedUsers = response.data;
-        const identifiedUser = returnedUsers.find(
+        identifiedUser = returnedUsers.find(
           (u) =>
             u.username === lowercaseUsername && u.password === formData.password
         );
         if (!identifiedUser) {
           throw new Error();
         }
+        const savedCart = JSON.parse(localStorage.getItem("cart"));
+        if (savedCart) identifiedUser.cart = savedCart;
         setUser(identifiedUser);
+        localStorage.setItem("token", JSON.stringify(identifiedUser));
+        localStorage.removeItem("cart");
         navigate("/products");
+        console.log(identifiedUser);
+      })
+      .then(() => {
+        return axios.put(
+          `http://localhost:3000/users/${identifiedUser.id}`,
+          identifiedUser
+        );
       })
       .catch(() => {
         setError("Invalid credentials!");

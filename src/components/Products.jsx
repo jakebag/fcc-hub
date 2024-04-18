@@ -6,6 +6,7 @@ import axios from "axios";
 import Container from "./Container";
 import Loader from "./Loader";
 import Error from "./Error";
+import useUserStore from "../hooks/useUserStore";
 
 export default function Products() {
   const [sort, setSort] = useState("LTH");
@@ -14,6 +15,8 @@ export default function Products() {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { user, setUser } = useUserStore();
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -90,9 +93,17 @@ export default function Products() {
           </div>
         </div>
 
-        <button className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-          Logout
-        </button>
+        {user && (
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              setUser(null);
+            }}
+            className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          >
+            Logout
+          </button>
+        )}
       </div>
 
       <div>

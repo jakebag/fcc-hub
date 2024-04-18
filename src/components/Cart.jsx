@@ -1,15 +1,20 @@
 import Container from "./Container";
 
 import useTempStore from "../hooks/useTempStore";
+import { useEffect } from "react";
 
 export default function Cart() {
-  const { cart } = useTempStore();
-  console.log(cart);
+  const { cart, updateCart, removeFromCart, setCart } = useTempStore();
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
+
+  useEffect(() => {
+    const loadedCart = JSON.parse(localStorage.getItem("cart"));
+    if (loadedCart) setCart(loadedCart);
+  }, [setCart]);
 
   return (
     <Container className="py-12">
@@ -45,11 +50,21 @@ export default function Cart() {
                       value={item.quantity}
                       min={1}
                       max={10}
-                      // onChange={(e) => setQty(e.target.value)}
+                      onChange={(e) =>
+                        updateCart(item, parseInt(e.target.value))
+                      }
                       className="rounded-full shadow-sm focus:ring-rose-500 focus:border-rose-500 block w-20 sm:text-sm border-gray-300"
                     />
                   </div>
                 </form>
+                <button
+                  onClick={() => {
+                    removeFromCart(item.id);
+                  }}
+                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Remove
+                </button>
                 <div className="flex flex-col md:flex-row gap-x-12 gap-y-2">
                   <p className="font-medium rounded">
                     Total: {formatter.format(item.price * item.quantity)}
