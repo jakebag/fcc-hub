@@ -13,6 +13,7 @@ import Profile from "./components/Profile.jsx";
 import Products from "./components/Products.jsx";
 import ProductDetails from "./components/ProductDetails.jsx";
 import Home from "./components/Home.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/products", element: <Products /> },
       { path: "/products/:id", element: <ProductDetails /> },
     ],
+    errorElement: <ErrorPage />,
   },
 ]);
 

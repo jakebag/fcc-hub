@@ -70,7 +70,14 @@ export default function Register() {
       });
   }
 
-  if (!user) return <div></div>;
+  if (!user)
+    return (
+      <Container className="py-16">
+        <h1 className="text-center font-bold text-2xl">
+          You need to be logged in to see your profile
+        </h1>
+      </Container>
+    );
 
   return (
     <Container className="py-16">

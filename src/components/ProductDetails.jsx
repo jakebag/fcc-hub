@@ -7,12 +7,18 @@ import Loader from "./Loader";
 import { SubmitButton } from "./Buttons";
 import Error from "./Error";
 
+import useUserStore from "../hooks/useUserStore";
+import useTempStore from "../hooks/useTempStore";
+
 export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const [error, setError] = useState(null);
   const { id } = useParams();
+
+  const { user } = useUserStore();
+  const { updateCart } = useTempStore();
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -33,6 +39,12 @@ export default function ProductDetails() {
       });
   }, [id]);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    updateCart(product.id, qty);
+  }
+
   if (loading)
     return (
       <Container className="py-16 flex justify-center">
@@ -46,10 +58,6 @@ export default function ProductDetails() {
         <Error message={error.message} />
       </Container>
     );
-
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
 
   return (
     <Container className="py-16 grid md:grid-cols-2 gap-16 items-center">
