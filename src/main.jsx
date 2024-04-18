@@ -7,6 +7,7 @@ import "./index.css";
 // Pages
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Products from "./components/Products.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
+      { path: "/products", element: <Products /> },
     ],
   },
 ]);
