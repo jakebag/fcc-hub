@@ -123,11 +123,7 @@ export default function ProductDetails() {
             />
           </div>
           <div className="mt-8">
-            <SubmitButton disabled={cart.some((i) => i.id === product.id)}>
-              {cart.some((i) => i.id === product.id)
-                ? "Already in Cart"
-                : "Add to Cart"}
-            </SubmitButton>
+            <SubmitButton>Add to Cart</SubmitButton>
           </div>
         </form>
       </div>
