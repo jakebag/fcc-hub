@@ -7,16 +7,24 @@ import "./index.css";
 // Pages
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Cart from "./components/Cart.jsx";
+import Orders from "./components/Orders.jsx";
+import Profile from "./components/Profile.jsx";
 import Products from "./components/Products.jsx";
 import ProductDetails from "./components/ProductDetails.jsx";
+import Home from "./components/Home.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      { path: "/", element: <Home /> },
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
+      { path: "/cart", element: <Cart /> },
+      { path: "/orders", element: <Orders /> },
+      { path: "/profile", element: <Profile /> },
       { path: "/products", element: <Products /> },
       { path: "/products/:id", element: <ProductDetails /> },
     ],

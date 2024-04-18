@@ -6,8 +6,11 @@ import Container from "./Container";
 import { Link, NavLink } from "react-router-dom";
 
 import logo from "../assets/logo.svg";
+import useUserStore from "../hooks/useUserStore";
 
 export default function Navbar() {
+  const { user } = useUserStore();
+
   return (
     <Disclosure as="nav" className="bg-gray-950 shadow text-white">
       {({ open }) => (
@@ -22,12 +25,23 @@ export default function Navbar() {
                 </div>
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  <DesktopNavLink to="register">Create Account</DesktopNavLink>
-                  <DesktopNavLink to="login">Login</DesktopNavLink>
-                  <DesktopNavLink to="products">Products</DesktopNavLink>
-                  <DesktopNavLink to="cart">Cart</DesktopNavLink>
-                  <DesktopNavLink to="orders">Orders</DesktopNavLink>
-                  <DesktopNavLink to="profile">Profile</DesktopNavLink>
+                  {user ? (
+                    <>
+                      <DesktopNavLink to="products">Products</DesktopNavLink>
+                      <DesktopNavLink to="cart">Cart</DesktopNavLink>
+                      <DesktopNavLink to="orders">Orders</DesktopNavLink>
+                      <DesktopNavLink to="profile">Profile</DesktopNavLink>
+                    </>
+                  ) : (
+                    <>
+                      <DesktopNavLink to="register">
+                        Create Account
+                      </DesktopNavLink>
+                      <DesktopNavLink to="login">Login</DesktopNavLink>
+                      <DesktopNavLink to="products">Products</DesktopNavLink>
+                      <DesktopNavLink to="cart">Cart</DesktopNavLink>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -47,12 +61,21 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              <MobileNavLink to="register">Create Account</MobileNavLink>
-              <MobileNavLink to="login">Login</MobileNavLink>
-              <MobileNavLink to="products">Products</MobileNavLink>
-              <MobileNavLink to="cart">Cart</MobileNavLink>
-              <MobileNavLink to="orders">Orders</MobileNavLink>
-              <MobileNavLink to="profile">Profile</MobileNavLink>
+              {user ? (
+                <>
+                  <MobileNavLink to="products">Products</MobileNavLink>
+                  <MobileNavLink to="cart">Cart</MobileNavLink>
+                  <MobileNavLink to="orders">Orders</MobileNavLink>
+                  <MobileNavLink to="profile">Profile</MobileNavLink>
+                </>
+              ) : (
+                <>
+                  <MobileNavLink to="register">Create Account</MobileNavLink>
+                  <MobileNavLink to="login">Login</MobileNavLink>
+                  <MobileNavLink to="products">Products</MobileNavLink>
+                  <MobileNavLink to="cart">Cart</MobileNavLink>
+                </>
+              )}
             </div>
           </Disclosure.Panel>
         </>

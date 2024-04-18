@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import Container from "./Container";
 import Loader from "./Loader";
 import { SubmitButton } from "./Buttons";
+import Error from "./Error";
 
 export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
+  const [error, setError] = useState(null);
   const { id } = useParams();
 
   const formatter = new Intl.NumberFormat("en-US", {
@@ -17,19 +20,30 @@ export default function ProductDetails() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProduct(data);
-        setLoading(false);
+    axios
+      .get(`http://localhost:3000/products/${id}`)
+      .then((response) => {
+        setProduct(response.data);
       })
-      .catch((error) => console.error("Error fetching product:", error));
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   if (loading)
     return (
       <Container className="py-16 flex justify-center">
         <Loader />
+      </Container>
+    );
+
+  if (error)
+    return (
+      <Container className="py-16 flex justify-center">
+        <Error message={error.message} />
       </Container>
     );
 

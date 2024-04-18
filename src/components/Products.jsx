@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import Container from "./Container";
-import { SecondaryButton } from "./Buttons";
 import Loader from "./Loader";
+import Error from "./Error";
 
 export default function Products() {
+  const [sort, setSort] = useState("LTH");
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -20,13 +23,17 @@ export default function Products() {
   let filteredProducts;
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
+    axios
+      .get("http://localhost:3000/products")
+      .then((response) => {
+        setProducts(response.data);
       })
-      .catch((error) => console.error("Error fetching products:", error));
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (products) {
@@ -38,12 +45,25 @@ export default function Products() {
     filteredProducts = filteredProducts.filter((a) =>
       a.name.toLowerCase().includes(search.toLowerCase())
     );
+
+    if (sort === "LTH") {
+      filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (sort === "HTL") {
+      filteredProducts.sort((a, b) => b.price - a.price);
+    }
   }
 
   if (loading)
     return (
       <Container className="py-16 flex justify-center">
         <Loader />
+      </Container>
+    );
+
+  if (error)
+    return (
+      <Container className="py-16 flex justify-center">
+        <Error message={error.message} />
       </Container>
     );
 
@@ -70,7 +90,9 @@ export default function Products() {
           </div>
         </div>
 
-        <SecondaryButton>Logout</SecondaryButton>
+        <button className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          Logout
+        </button>
       </div>
 
       <div>
@@ -78,12 +100,18 @@ export default function Products() {
           <div className="font-semibold text-lg">
             Showing {category} products
           </div>
-          <div>
+          <div className="flex gap-2 items-center">
+            <label
+              htmlFor="sort"
+              className="block text-sm font-medium text-gray-700 flex-shrink-0"
+            >
+              For:
+            </label>
             <select
               id="category"
               name="category"
               value={category}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm rounded-md"
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm rounded-md"
               onChange={(e) => setCategory(e.target.value)}
             >
               <option>All</option>
@@ -91,6 +119,24 @@ export default function Products() {
               <option>XBOX</option>
               <option>Switch</option>
               <option>PC</option>
+            </select>
+          </div>
+          <div className="flex gap-2 items-center">
+            <label
+              htmlFor="sort"
+              className="block text-sm font-medium text-gray-700 flex-shrink-0"
+            >
+              Sort by:
+            </label>
+            <select
+              id="sort"
+              name="sort"
+              value={sort}
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm rounded-md"
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="LTH">Price: Low to High</option>
+              <option value="HTL">Price: Hight to Low</option>
             </select>
           </div>
         </div>

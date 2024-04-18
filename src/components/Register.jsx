@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import Container from "./Container";
 import { PasswordInput, TextInput } from "./Inputs";
 import { SubmitButton } from "./Buttons";
+
+import useUserStore from "../hooks/useUserStore";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +14,16 @@ export default function Register() {
     username: "",
     password: "",
   });
+
+  const { user, setUser } = useUserStore();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/products");
+    }
+  }, [user, navigate]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -21,6 +35,35 @@ export default function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const lowercaseUsername = formData.username.toLowerCase();
+
+    const newUser = {
+      ...formData,
+      username: lowercaseUsername,
+      cart: [],
+      orders: [],
+    };
+
+    axios
+      .get("http://localhost:3000/users")
+      .then((response) => {
+        const usernames = response.data.map((u) => u.username);
+        if (usernames.includes(lowercaseUsername)) {
+          throw new Error("Username already exists!");
+        }
+      })
+      .then(() => {
+        return axios.post("http://localhost:3000/users", newUser);
+      })
+      .then((response) => {
+        console.log("User registered successfully:", response.data);
+        setUser(newUser);
+        navigate("/products");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   }
 
   return (
@@ -54,6 +97,11 @@ export default function Register() {
             <SubmitButton>Submit</SubmitButton>
           </div>
         </form>
+        {error && (
+          <div className="text-red-600 text-center mt-6 p-2 bg-red-100 rounded-sm ring-1 ring-red-300">
+            {error}
+          </div>
+        )}
       </div>
     </Container>
   );
