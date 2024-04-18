@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import { SubmitButton } from "./Buttons";
 import Error from "./Error";
 
-// import useUserStore from "../hooks/useUserStore";
+import useUserStore from "../hooks/useUserStore";
 import useTempStore from "../hooks/useTempStore";
 
 export default function ProductDetails() {
@@ -17,7 +17,7 @@ export default function ProductDetails() {
   const [error, setError] = useState(null);
   const { id } = useParams();
 
-  // const { user } = useUserStore();
+  const { user } = useUserStore();
   const { cart, updateCart } = useTempStore();
 
   const formatter = new Intl.NumberFormat("en-US", {
@@ -39,10 +39,43 @@ export default function ProductDetails() {
       });
   }, [id]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit() {
+    if (user) {
+      const existingProduct = cart.find((item) => item.id === product.id);
+      let updatedCart;
 
-    updateCart(product, qty);
+      if (existingProduct) {
+        // If the product already exists in the cart, update its quantity
+        updatedCart = cart.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: qty };
+          }
+          return item;
+        });
+      } else {
+        // If the product doesn't exist in the cart, add it with the new quantity
+        updatedCart = [...cart, { ...product, quantity: qty }];
+      }
+
+      // Send updated cart data to the backend
+      axios
+        .put(`http://localhost:3000/users/${user.id}`, {
+          ...user,
+          cart: updatedCart,
+        })
+        .then((response) => {
+          console.log(
+            "Cart updated successfully on the backend:",
+            response.data
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating cart on the backend:", error);
+        });
+    } else {
+      // If no user is logged in, update the temporary cart
+      updateCart(product, qty);
+    }
   }
 
   if (loading)

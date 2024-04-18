@@ -1,23 +1,141 @@
+import { useEffect, useState } from "react";
+
 import Container from "./Container";
+import { SecondaryButton } from "./Buttons";
 
 import useTempStore from "../hooks/useTempStore";
-import { useEffect } from "react";
+import useUserStore from "../hooks/useUserStore";
+import Loader from "./Loader";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { cart, updateCart, removeFromCart, setCart } = useTempStore();
+  const {
+    cart: localCart,
+    updateCart,
+    removeFromCart,
+    setCart: setLocalCart,
+  } = useTempStore();
+  const { user } = useUserStore();
+  const [loading, setLoading] = useState(true);
+
+  const [cart, setCart] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadedCart = JSON.parse(localStorage.getItem("cart"));
+    if (loadedCart) setLocalCart(loadedCart);
+  }, [setLocalCart]);
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`http://localhost:3000/users/${user.id}`).then((res) => {
+        const user = res.data;
+        setCart(user.cart);
+        setLoading(false);
+      });
+    } else if (localCart) {
+      setCart(localCart);
+      setLoading(false);
+    }
+  }, [localCart, user]);
+
+  if (loading)
+    return (
+      <Container className="py-16 flex justify-center">
+        <Loader />
+      </Container>
+    );
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  useEffect(() => {
-    const loadedCart = JSON.parse(localStorage.getItem("cart"));
-    if (loadedCart) setCart(loadedCart);
-  }, [setCart]);
+  function handleOrder() {
+    if (user && cart.length > 0) {
+      const items = cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
+      const newOrder = {
+        date: new Date().toISOString(),
+        items: items,
+      };
+
+      const updatedOrders = [...user.orders, newOrder];
+
+      // Update user data on the backend
+      axios
+        .put(`http://localhost:3000/users/${user.id}`, {
+          ...user,
+          cart: [],
+          orders: updatedOrders,
+        })
+        .then((response) => {
+          console.log(
+            "User data updated successfully on the backend:",
+            response.data
+          );
+          setCart([]);
+          navigate("/orders");
+        })
+        .catch((error) => {
+          console.error("Error updating user data on the backend:", error);
+        });
+    }
+  }
+
+  function handleChange(e, product) {
+    const newQuantity = parseInt(e.target.value);
+
+    if (user) {
+      const existingProduct = cart.find((item) => item.id === product.id);
+      let updatedCart;
+
+      if (existingProduct) {
+        // If the product already exists in the cart, update its quantity
+        updatedCart = cart.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        });
+      } else {
+        // If the product doesn't exist in the cart, add it with the new quantity
+        updatedCart = [...cart, { ...product, quantity: newQuantity }];
+      }
+
+      // Update the cart in the frontend
+      setCart(updatedCart);
+
+      // Send updated cart data to the backend
+      axios
+        .put(`http://localhost:3000/users/${user.id}`, {
+          ...user,
+          cart: updatedCart,
+        })
+        .then((response) => {
+          console.log(
+            "Cart updated successfully on the backend:",
+            response.data
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating cart on the backend:", error);
+        });
+    } else {
+      // If no user is logged in, update the temporary cart
+      updateCart(product, newQuantity);
+    }
+  }
 
   return (
-    <Container className="py-12">
+    <Container className="py-16">
       <h1 className="text-xl font-semibold">Your Cart 🛒</h1>
       {cart.length === 0 ? (
         <div className="mt-6">Your cart is empty 🙁</div>
@@ -27,7 +145,7 @@ export default function Cart() {
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="bg-rose-100 px-6 md:px-12 py-4 rounded-md flex justify-between items-center"
+                className="bg-rose-100 px-6 md:px-12 py-4 rounded-md flex flex-col md:flex-row justify-between items-center"
               >
                 <div className="flex items-center gap-4">
                   <img
@@ -50,9 +168,7 @@ export default function Cart() {
                       value={item.quantity}
                       min={1}
                       max={10}
-                      onChange={(e) =>
-                        updateCart(item, parseInt(e.target.value))
-                      }
+                      onChange={(e) => handleChange(e, item)}
                       className="rounded-full shadow-sm focus:ring-rose-500 focus:border-rose-500 block w-20 sm:text-sm border-gray-300"
                     />
                   </div>
@@ -86,7 +202,9 @@ export default function Cart() {
               </span>
             </p>
 
-            <div className="mt-5 text-right"></div>
+            <div className="mt-8" onClick={handleOrder}>
+              <SecondaryButton>Order now</SecondaryButton>
+            </div>
           </div>
         </>
       )}
