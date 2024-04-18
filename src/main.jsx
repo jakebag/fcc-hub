@@ -6,12 +6,16 @@ import "./index.css";
 
 // Pages
 import Register from "./components/Register.jsx";
+import Login from "./components/Login.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ path: "/register", element: <Register /> }],
+    children: [
+      { path: "/register", element: <Register /> },
+      { path: "/login", element: <Login /> },
+    ],
   },
 ]);
 
