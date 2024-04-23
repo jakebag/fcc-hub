@@ -5,7 +5,6 @@ import Container from "./Container";
 
 import { Link, NavLink } from "react-router-dom";
 
-import logo from "../assets/logo.svg";
 import useUserStore from "../hooks/useUserStore";
 
 export default function Navbar() {
@@ -19,8 +18,10 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex justify-between w-full">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link to="/" className="mt-2.5">
-                    <img src={logo} className="h-8 w-auto" alt="FCC Hub logo" />
+                  <Link to="/" className="">
+                    <h1 className="font-serif font-bold text-2xl text-rose-500">
+                      FGC Hub
+                    </h1>
                   </Link>
                 </div>
 
