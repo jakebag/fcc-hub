@@ -57,5 +57,14 @@
       "for": "XBOX"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "id": "307e",
+      "firstname": "Jake",
+      "username": "jake123",
+      "password": "Zan Is A Nerd",
+      "cart": [],
+      "orders": []
+    }
+  ]
 }
