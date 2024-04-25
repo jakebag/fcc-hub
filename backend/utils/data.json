@@ -1,0 +1,70 @@
+{
+  "products": [
+    {
+      "id": "cx64",
+      "name": "MICRO with Artwork Case",
+      "description": "Elevate your gaming experience with the MICRO with Artwork Case for PS5. Enjoy seamless setup - no extra steps or hacks required. Immerse yourself in the world of gaming with this stylish and efficient leverless design. Discover the ultimate gaming accessory for your PS5.",
+      "price": "220",
+      "image": "https://junkfoodarcades.com/cdn/shop/files/AWM1.jpg?v=1692305528",
+      "for": "PS5"
+    },
+    {
+      "id": "jh23",
+      "name": "MICRO XL with Artwork Case",
+      "description": "Transform your gaming setup with the MICRO XL with Artwork Case for Xbox. Experience gaming like never before with its leverless design. Say goodbye to complicated installations - this accessory is ready to use out of the box. Elevate your Xbox gaming experience today!",
+      "price": "230",
+      "image": "https://junkfoodarcades.com/cdn/shop/files/XL1_586f8746-8c49-4431-84ce-d58cd09abe9f.jpg?v=1706801937",
+      "for": "XBOX"
+    },
+    {
+      "id": "kj54",
+      "name": "MICRO LITE Starter Kit",
+      "description": "Begin your gaming journey with the MICRO LITE Starter Kit for Switch. Perfect for newcomers, this kit provides everything you need to dive into the world of gaming. Unleash your potential and embark on epic adventures with ease. Get ready to level up your gaming skills!",
+      "price": "140",
+      "image": "https://junkfoodarcades.com/cdn/shop/files/StarterKit.jpg?v=1709926660",
+      "for": "Switch"
+    },
+    {
+      "id": "sb91",
+      "name": "MICRO LITE for PC",
+      "description": "Enhance your PC gaming experience with the MICRO LITE. Designed for PC players, this accessory offers standard MICRO features with limited system support. Enjoy seamless gameplay and streamline your setup with this sleek and efficient accessory.",
+      "price": "120",
+      "image": "https://junkfoodarcades.com/cdn/shop/products/FullLavender3.jpg?v=1704814260",
+      "for": "PC"
+    },
+    {
+      "id": "ka87",
+      "name": "MICRO with One-piece Case",
+      "description": "Elevate your Xbox gaming experience with the MICRO with One-piece Case. Designed for Xbox players, this accessory offers the perfect blend of style and functionality. Say goodbye to complicated setups - enjoy gaming with ease and convenience.",
+      "price": "215",
+      "image": "https://junkfoodarcades.com/cdn/shop/files/IMG-1860.jpg?v=1710778552",
+      "for": "XBOX"
+    },
+    {
+      "id": "bg23",
+      "name": "MICRO XL",
+      "description": "Take your PS5 gaming to the next level with the MICRO XL. Featuring a leverless design, this accessory offers seamless installation and hassle-free gameplay. Elevate your gaming setup with this stylish and efficient accessory.",
+      "price": "230",
+      "image": "https://junkfoodarcades.com/cdn/shop/files/XL1.jpg?v=1692305569",
+      "for": "PS5"
+    },
+    {
+      "id": "an42",
+      "name": "Xbox Series version of the M2 PCB",
+      "description": "Upgrade your Xbox gaming experience with the Xbox Series version of the M2 PCB. Designed for the Snack Box Micro, this accessory ensures smooth performance without the need for extra steps or hacks. Unleash the full potential of your Xbox gaming setup.",
+      "price": "99",
+      "image": "https://junkfoodarcades.com/cdn/shop/products/PS5PCB.jpg?v=1673644558",
+      "for": "XBOX"
+    }
+  ],
+  "users": [
+    {
+      "id": "307e",
+      "firstname": "Jake",
+      "username": "jake123",
+      "password": "Zan Is A Nerd",
+      "cart": [],
+      "orders": []
+    }
+  ]
+}
