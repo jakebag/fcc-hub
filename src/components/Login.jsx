@@ -35,7 +35,7 @@ export default function Login() {
     let identifiedUser;
 
     axios
-      .get(`http://localhost:3000/users`)
+      .get(`https://json-server-t23y.onrender.com/users/`)
       .then((response) => {
         const returnedUsers = response.data;
         identifiedUser = returnedUsers.find(
@@ -55,7 +55,7 @@ export default function Login() {
       })
       .then(() => {
         return axios.put(
-          `http://localhost:3000/users/${identifiedUser.id}`,
+          `https://json-server-t23y.onrender.com/users/${identifiedUser.id}`,
           identifiedUser
         );
       })

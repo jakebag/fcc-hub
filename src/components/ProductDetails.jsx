@@ -27,7 +27,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/products/${id}`)
+      .get(`https://json-server-t23y.onrender.com/products/${id}`)
       .then((response) => {
         setProduct(response.data);
       })
@@ -60,7 +60,7 @@ export default function ProductDetails() {
 
       // Send updated cart data to the backend
       axios
-        .put(`http://localhost:3000/users/${user.id}`, {
+        .put(`https://json-server-t23y.onrender.com/users/${user.id}`, {
           ...user,
           cart: updatedCart,
         })

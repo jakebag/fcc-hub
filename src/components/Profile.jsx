@@ -47,7 +47,7 @@ export default function Register() {
     };
 
     axios
-      .get("http://localhost:3000/users")
+      .get("https://json-server-t23y.onrender.com/users/")
       .then((response) => {
         const usernames = response.data.map((u) => u.username);
         if (
@@ -58,7 +58,7 @@ export default function Register() {
         }
       })
       .then(() => {
-        return axios.put(`http://localhost:3000/users/${user.id}`, newUser);
+        return axios.put(`https://json-server-t23y.onrender.com/users/${user.id}`, newUser);
       })
       .then((response) => {
         console.log("User updated successfully:", response.data);

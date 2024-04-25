@@ -25,7 +25,7 @@ export default function Cart() {
   useEffect(() => {
     if (user) {
       console.log(user);
-      axios.get(`http://localhost:3000/users/${user.id}`).then((res) => {
+      axios.get(`https://json-server-t23y.onrender.com/users/${user.id}`).then((res) => {
         const user = res.data;
         setCart(user.cart);
         setLoading(false);
@@ -72,7 +72,7 @@ export default function Cart() {
 
       // Update user data on the backend
       axios
-        .put(`http://localhost:3000/users/${user.id}`, {
+        .put(`https://json-server-t23y.onrender.com/users/${user.id}`, {
           ...user,
           cart: [],
           orders: updatedOrders,
@@ -116,7 +116,7 @@ export default function Cart() {
 
       // Send updated cart data to the backend
       axios
-        .put(`http://localhost:3000/users/${user.id}`, {
+        .put(`https://json-server-t23y.onrender.com/users/${user.id}`, {
           ...user,
           cart: updatedCart,
         })

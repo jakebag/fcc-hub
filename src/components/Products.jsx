@@ -27,7 +27,7 @@ export default function Products() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products")
+      .get("https://json-server-t23y.onrender.com/products")
       .then((response) => {
         setProducts(response.data);
       })

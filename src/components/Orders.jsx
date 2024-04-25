@@ -11,7 +11,7 @@ export default function Orders() {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:3000/users/${user.id}`)
+        .get(`https://json-server-t23y.onrender.com/users/${user.id}`)
         .then((res) => setOrders(res.data.orders));
     }
   }, [user]);

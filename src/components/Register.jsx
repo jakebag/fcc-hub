@@ -46,7 +46,7 @@ export default function Register() {
     };
 
     axios
-      .get("http://localhost:3000/users")
+      .get("https://json-server-t23y.onrender.com/users/")
       .then((response) => {
         const usernames = response.data.map((u) => u.username);
         if (usernames.includes(lowercaseUsername)) {
@@ -54,7 +54,7 @@ export default function Register() {
         }
       })
       .then(() => {
-        return axios.post("http://localhost:3000/users", newUser);
+        return axios.post("https://json-server-t23y.onrender.com/users/", newUser);
       })
       .then((response) => {
         console.log("User registered successfully:", response.data);
